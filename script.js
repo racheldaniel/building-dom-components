@@ -73,18 +73,27 @@ const students = [
   }
 ]
 
+// const h1 = (...props) => {
+//   return `<h1 class= "xxlarge ${props[1]}">${props[0]}</h1>`
+// }
+// const section = (...props) => {
+//   return `<section class="bordered dashed ${props[1]}">${props[0]}</section>`
+// }
+
+// const aside = (...props) => {
+//   return `<aside class="${props[1]}">${props[0]}</aside>`
+// }
 const studentArticle = document.getElementById("container")
 
-const h1 = (title, style) => {
-  return `<h1 class= "xxlarge ${style}">${title}</h1>`
-}
-const section = (title, style) => {
-  return `<section class="bordered dashed ${style}">${title}</section>`
+const element = (elem, content, ...classes) => {
+  console.log(classes)
+  let style = ""
+  classes.forEach(function(classID){
+    style += `${classID} `; 
+  });
+  return `<${elem} class="${style}"> ${content}</${elem}>`
 }
 
-const aside = (title, style) => {
-  return `<aside class="${style}">${title}</aside>`
-}
 
 for (student of students) {
   let studentDiv =  document.createElement("div");
@@ -92,13 +101,14 @@ for (student of students) {
   studentArticle.appendChild(studentDiv)
   let studentElem = ""
   if (student.score >= 60) {
-    studentElem += h1(student.name, "passing")
+    studentElem += element("h1", student.name, "xxlarge", "passing")
   } else {
-    studentElem += h1(student.name, "failing")
+    studentElem += element("h1", student.name, "xxlarge", "failing")
   }
-  studentElem += section(student.class, "section--padded" )
-  studentElem += aside(student.info, "pushRight" )
+  studentElem += element("section", student.class, "bordered", "dashed", "section--padded" )
+  studentElem += element("aside", student.info, "pushRight")
   studentDiv.innerHTML = studentElem
 }
 
 
+console.log(element("h1", "name", "bold", "moreStuff"))
